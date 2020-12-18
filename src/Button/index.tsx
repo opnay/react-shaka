@@ -1,4 +1,4 @@
-import React from 'react';
+import { useMemo } from 'react';
 import './button.css';
 
 interface Props extends React.ComponentProps<'button'> {
@@ -9,7 +9,7 @@ interface Props extends React.ComponentProps<'button'> {
 
 const Button: React.FunctionComponent<Props> = (props) => {
   const { primary, backgroundColor, size, className, ...restProps } = props;
-  const classNames = React.useMemo(
+  const classNames = useMemo(
     () =>
       [
         'storybook-button',
