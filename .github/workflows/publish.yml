@@ -1,0 +1,60 @@
+name: Publish
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  publish:
+    name: Publish to Registry
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn
+      - run: yarn build
+
+      # Publish NPM
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Publish github
+      - uses: actions/setup-node@v1
+        with:
+          registry-url: 'https://npm.pkg.github.com'
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  storybook:
+    name: Build Storybook
+    runs-on: ubuntu-latest
+    needs: publish
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14
+        uses: actions/setup-node@1
+        with:
+          node-version: 14
+      - run: yarn
+      - run: yarn build:storybook
+
+      # Publish build
+      - name: Push to gh-pages
+        run: |
+          cd storybook-static
+          git init
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git checkout -b gh-pages
+          git add .
+          git commit -m "$(date)"
+          git push -f origin gh-pages
