@@ -1,15 +1,20 @@
 {
-  "name": "react-shaka",
+  "name": "@opnay/react-shaka",
   "version": "1.0.0",
   "description": "Google Shaka Player for react",
   "main": "dist/index.js",
+  "module": "dist/index.module.js",
   "types": "dist/types.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build:storybook": "build-storybook",
-    "build": "parcel build --no-source-maps src/index.ts",
-    "build:types": "npx parcel@next build --no-source-maps --target types src/index.ts"
+    "build": "parcel build --no-source-maps --no-minify src/index.tsx",
+    "build:types": "tsc --project ./tsconfig.types.json || true"
   },
   "keywords": [
     "shaka-player",
@@ -24,21 +29,27 @@
     "@storybook/addon-links": "^6.1.11",
     "@storybook/preset-scss": "^1.0.3",
     "@storybook/react": "^6.1.11",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "babel-loader": "^8.2.2",
     "husky": "^4.3.6",
     "lint-staged": "^10.5.3",
-    "parcel": "^1.12.4",
+    "parcel": "^2.0.0-beta.1",
     "prettier": "^2.2.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "sass": "^1.30.0",
     "sass-loader": "^10.1.0",
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
     "shaka-player": "^3.0.6"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "targets": {
+    "types": false
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

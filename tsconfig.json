@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
+    "jsx": "react",
     "sourceMap": false,
     "strict": true,
     "noImplicitReturns": true,
@@ -9,9 +10,10 @@
     "moduleResolution": "node",
     "target": "es5",
     "allowJs": true,
-    "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
-    "lib": ["ES2015"]
+    "lib": ["DOM", "ES2020"],
+    "typeRoots": ["./types"]
   },
-  "include": ["./src/**/*"]
+  "include": ["src", "types"],
+  "exclude": ["node_modules", "src/**/*.stories*"]
 }
