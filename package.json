@@ -1,6 +1,6 @@
 {
   "name": "@opnay/react-shaka",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Google Shaka Player for react",
   "main": "dist/index.js",
   "module": "dist/index.module.js",
